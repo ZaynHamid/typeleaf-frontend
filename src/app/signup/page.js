@@ -20,7 +20,7 @@ export default function Signup() {
     setError("");
 
     try {
-      const response = await axios.post("https://typeleaf-backend--zainhamid982.replit.app/signup", {
+      const response = await axios.post("https://typeleaf-backend--zainhamid982.replit.appsignup", {
         username,
         email,
         password,

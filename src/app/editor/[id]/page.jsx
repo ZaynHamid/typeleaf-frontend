@@ -34,7 +34,7 @@ export default function MarkdownEditor() {
     useEffect(() => {
         const t = localStorage.getItem("token");
         setToken(t);
-        axios.get(`https://typeleaf-backend--zainhamid982.replit.app/post?id=${id}`).then(res => setContent(res.data[0].body)).catch(e => console.error(e))
+        axios.get(`https://typeleaf-backend--zainhamid982.replit.apppost?id=${id}`).then(res => setContent(res.data[0].body)).catch(e => console.error(e))
     }, [])
 
     const handleChange = e => {
@@ -46,7 +46,7 @@ export default function MarkdownEditor() {
         console.log("Saved Markdown:", content);
         const title = prompt("Enter title: ");
 
-        const response = await axios.put("https://typeleaf-backend--zainhamid982.replit.app/post", {
+        const response = await axios.put("https://typeleaf-backend--zainhamid982.replit.apppost", {
             postId: id, updates: {
                 title: title,
                 body: content

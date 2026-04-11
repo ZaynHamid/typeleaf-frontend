@@ -84,7 +84,7 @@ const handleSave = async () => {
 
   try {
     const response = await axios.post(
-      "https://typeleaf-backend--zainhamid982.replit.app/create-post",
+      "https://typeleaf-backend--zainhamid982.replit.appcreate-post",
       { title, body: content, tags },
       {
         headers: {

@@ -27,13 +27,13 @@ export default function Dashboard() {
         setToken(t);
 
         axios
-            .get("https://typeleaf-backend--zainhamid982.replit.app/me", { headers: { Authorization: `Bearer ${t}` } })
+            .get("https://typeleaf-backend--zainhamid982.replit.appme", { headers: { Authorization: `Bearer ${t}` } })
             .then((res) => {
                 setUsername(res.data.user.username);
                 return res.data.user.id;
             })
             .then((userId) =>
-                axios.get(`https://typeleaf-backend--zainhamid982.replit.app/post?author=${userId}`, {
+                axios.get(`https://typeleaf-backend--zainhamid982.replit.apppost?author=${userId}`, {
                     headers: { Authorization: `Bearer ${t}` },
                 })
             )
@@ -47,13 +47,13 @@ export default function Dashboard() {
             .finally(() => setLoading(false));
             
         axios
-            .get("https://typeleaf-backend--zainhamid982.replit.app/save", { headers: { Authorization: `Bearer ${t}` } })
+            .get("https://typeleaf-backend--zainhamid982.replit.appsave", { headers: { Authorization: `Bearer ${t}` } })
             .then(async (res) => {
                 const saved = res.data.saved ?? [];
                 if (saved.length === 0) return;
 
                 const postRequests = saved.map((s) =>
-                    axios.get(`https://typeleaf-backend--zainhamid982.replit.app/post?id=${s.postId}`)
+                    axios.get(`https://typeleaf-backend--zainhamid982.replit.apppost?id=${s.postId}`)
                         .then((r) => r.data[0])
                         .catch(() => null)
                 );
@@ -79,7 +79,7 @@ export default function Dashboard() {
 
         try {
             const response = await axios.delete(
-                `https://typeleaf-backend--zainhamid982.replit.app/post/${id}`,
+                `https://typeleaf-backend--zainhamid982.replit.apppost/${id}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -103,7 +103,7 @@ export default function Dashboard() {
     const onUnsave = async (postId) => {
         const t = localStorage.getItem("token");
         try {
-            await axios.delete(`https://typeleaf-backend--zainhamid982.replit.app/unsave/${postId}`, {
+            await axios.delete(`https://typeleaf-backend--zainhamid982.replit.appunsave/${postId}`, {
                 headers: { Authorization: `Bearer ${t}` },
             });
             setSavedPosts((prev) => prev.filter((p) => p._id !== postId));
