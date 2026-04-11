@@ -95,6 +95,7 @@ function Comment({ comment, level = 0, onReplyPosted, token }) {
             <span className="text-sm font-semibold text-stone-800" style={{ fontFamily: "system-ui, sans-serif" }}>
               {comment.author?.username ?? "Anonymous"}
             </span>
+            {JSON.stringify(comment)}
             <span className="text-xs text-stone-400" style={{ fontFamily: "system-ui, sans-serif" }}>
               {timeAgo(comment.createdAt)}
             </span>
@@ -135,9 +136,9 @@ function Comment({ comment, level = 0, onReplyPosted, token }) {
             </div>
           )}
 
-          {comment.replies?.map((reply) => (
+          {comment.replies?.map((reply, i) => (
             <Comment
-              key={reply._id}
+              key={i}
               comment={reply}
               level={level + 1}
               onReplyPosted={onReplyPosted}

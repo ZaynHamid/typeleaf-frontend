@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Added for redirection
+import { useRouter } from "next/navigation"; 
 
 export default function Dashboard() {
     const router = useRouter();
@@ -26,7 +26,6 @@ export default function Dashboard() {
 
         setToken(t);
 
-        // Fetch User and User's Posts
         axios
             .get("https://typeleaf-backend--zainhamid982.replit.app/me", { headers: { Authorization: `Bearer ${t}` } })
             .then((res) => {
@@ -47,7 +46,6 @@ export default function Dashboard() {
             })
             .finally(() => setLoading(false));
             
-        // Fetch Saved Posts
         axios
             .get("https://typeleaf-backend--zainhamid982.replit.app/save", { headers: { Authorization: `Bearer ${t}` } })
             .then(async (res) => {
@@ -70,7 +68,6 @@ export default function Dashboard() {
         localStorage.removeItem("token");
         setToken(null);
         setUsername(null);
-        // Redirect to login page
         router.push("/login"); 
     };
 
@@ -185,7 +182,6 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* My Posts Section */}
                 <div className="flex items-center justify-between mb-3">
                     <p className="text-xs font-medium text-gray-900 uppercase tracking-widest">My posts</p>
                     <span className="text-xs text-gray-900 bg-gray-100 px-2.5 py-1 rounded-full">
