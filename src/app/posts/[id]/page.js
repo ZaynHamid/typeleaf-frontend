@@ -70,7 +70,7 @@ function Comment({ comment, level = 0, onReplyPosted, token }) {
     setReplyError(null);
     try {
       const res = await axios.post(
-        "https://typeleaf-backend--zainhamid982.replit.appcomment",
+        "https://typeleaf-backend--zainhamid982.replit.app/comment",
         { postId: id, comment: replyText, parentId: comment._id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -175,9 +175,9 @@ export default function Post() {
     if (t) setToken(t);
 
     Promise.all([
-      axios.get(`https://typeleaf-backend--zainhamid982.replit.apppost?id=${id}`),
-      axios.get(`https://typeleaf-backend--zainhamid982.replit.appcomment/${id}`),
-      axios.get(`https://typeleaf-backend--zainhamid982.replit.applikes/${id}`),
+      axios.get(`https://typeleaf-backend--zainhamid982.replit.app/post?id=${id}`),
+      axios.get(`https://typeleaf-backend--zainhamid982.replit.app/comment/${id}`),
+      axios.get(`https://typeleaf-backend--zainhamid982.replit.app/likes/${id}`),
     ])
       .then(([postRes, commentRes, likeRes]) => {
         const fetched = postRes.data[0];
@@ -204,7 +204,7 @@ export default function Post() {
     setCommentError(null);
     try {
       const res = await axios.post(
-        "https://typeleaf-backend--zainhamid982.replit.appcomment",
+        "https://typeleaf-backend--zainhamid982.replit.app/comment",
         { postId: id, comment },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -225,7 +225,7 @@ export default function Post() {
     setLikeError(null);
     try {
       const res = await axios.post(
-        "https://typeleaf-backend--zainhamid982.replit.applike",
+        "https://typeleaf-backend--zainhamid982.replit.app/like",
         { postId: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -244,13 +244,13 @@ export default function Post() {
     setSaveError(null);
     try {
       if (isSaved) {
-        await axios.delete(`https://typeleaf-backend--zainhamid982.replit.appunsave/${id}`, {
+        await axios.delete(`https://typeleaf-backend--zainhamid982.replit.app/unsave/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setIsSaved(false);
       } else {
         await axios.post(
-          "https://typeleaf-backend--zainhamid982.replit.appsave",
+          "https://typeleaf-backend--zainhamid982.replit.app/save",
           { postId: id },
           { headers: { Authorization: `Bearer ${token}` } }
         );

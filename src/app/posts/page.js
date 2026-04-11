@@ -13,7 +13,7 @@ export default function Posts() {
 
   useEffect(() => {
     axios
-      .get("https://typeleaf-backend--zainhamid982.replit.apppost")
+      .get("https://typeleaf-backend--zainhamid982.replit.app/post")
       .then((res) => {
         setPosts(res.data);
         setAllPosts(res.data);
