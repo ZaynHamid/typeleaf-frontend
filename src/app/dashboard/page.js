@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Added for redirection
 
 export default function Dashboard() {
+    const router = useRouter();
     const [token, setToken] = useState(null);
     const [username, setUsername] = useState(null);
     const [posts, setPosts] = useState([]);
@@ -24,6 +26,7 @@ export default function Dashboard() {
 
         setToken(t);
 
+        // Fetch User and User's Posts
         axios
             .get("https://typeleaf-backend--zainhamid982.replit.app/me", { headers: { Authorization: `Bearer ${t}` } })
             .then((res) => {
@@ -44,6 +47,7 @@ export default function Dashboard() {
             })
             .finally(() => setLoading(false));
             
+        // Fetch Saved Posts
         axios
             .get("https://typeleaf-backend--zainhamid982.replit.app/save", { headers: { Authorization: `Bearer ${t}` } })
             .then(async (res) => {
@@ -61,6 +65,14 @@ export default function Dashboard() {
             })
             .catch(() => {});
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setToken(null);
+        setUsername(null);
+        // Redirect to login page
+        router.push("/login"); 
+    };
 
     const onDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this post?")) return;
@@ -143,6 +155,12 @@ export default function Dashboard() {
                         <h1 className="text-3xl font-semibold text-gray-900">Hello, {username ?? "there"}!</h1>
                     </div>
                     <div className="flex items-center gap-2 pt-1">
+                        <button 
+                            onClick={handleLogout}
+                            className="text-sm font-medium text-red-600 border border-red-100 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors"
+                        >
+                            Logout
+                        </button>
                         <Link href="/posts" className="text-sm font-medium text-gray-900 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
                             View posts
                         </Link>
@@ -167,7 +185,7 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* My Posts */}
+                {/* My Posts Section */}
                 <div className="flex items-center justify-between mb-3">
                     <p className="text-xs font-medium text-gray-900 uppercase tracking-widest">My posts</p>
                     <span className="text-xs text-gray-900 bg-gray-100 px-2.5 py-1 rounded-full">
@@ -226,7 +244,7 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Saved Posts */}
+                {/* Saved Posts Section */}
                 <div className="flex items-center justify-between mb-3">
                     <p className="text-xs font-medium text-gray-900 uppercase tracking-widest">Saved posts</p>
                     <span className="text-xs text-gray-900 bg-gray-100 px-2.5 py-1 rounded-full">
