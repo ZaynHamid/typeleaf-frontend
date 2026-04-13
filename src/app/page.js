@@ -1,6 +1,32 @@
+"use client"
+import axios from "axios";
 import Link from "next/link"
+import { useRouter } from "next/navigation";
+import { useEffect } from "react"
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    const t = localStorage.getItem("token");
+    if(t) {
+      axios.get("https://typeleaf-backend--zainhamid982.replit.app/me", {
+        headers: {
+          Authorization: `Bearer ${t}`
+        }
+      }).then(res => {
+        if(res.status === 200) {
+          router.push("/dashboard");
+        }
+      }).catch(e => {
+        if(e.status === 401) {
+          localStorage.removeItem("token");
+          alert("Session expired or invalid token"); 
+        }
+      });
+
+    }  
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#FAFAF8] flex flex-col" style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}>
 
