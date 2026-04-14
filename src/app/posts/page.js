@@ -15,8 +15,11 @@ export default function Posts() {
     axios
       .get("https://typeleaf-backend--zainhamid982.replit.app/post")
       .then((res) => {
-        setPosts(res.data);
-        setAllPosts(res.data);
+        const sorted = [...res.data].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setPosts(sorted);
+        setAllPosts(sorted);
       })
       .catch((e) => {
         if (e.code === "ERR_NETWORK") {
